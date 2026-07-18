@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-
-const GREEN = '#3CB043';
+import theme from "../../constants/theme.js";
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,11 +14,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: theme.spacing.lg,
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 140,
+    marginBottom: 60,
   },
   logo: {
     width: 280,
@@ -27,31 +26,31 @@ export const styles = StyleSheet.create({
   },
   buttonsContainer: {
     width: '100%',
-    gap: 14,
+    gap: theme.spacing.md,
     marginBottom: 80,
   },
   buttonPrimary: {
-    backgroundColor: GREEN,
+    backgroundColor: theme.colors.primary,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: theme.radius.pill,
     alignItems: 'center',
   },
   buttonPrimaryText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
+    color: theme.colors.white,
+    fontSize: theme.fontSize.md,
+    fontFamily: theme.fonts.button,
   },
   buttonSecondary: {
     backgroundColor: 'transparent',
     borderWidth: 1.5,
-    borderColor: GREEN,
+    borderColor: theme.colors.primary,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: theme.radius.pill,
     alignItems: 'center',
   },
   buttonSecondaryText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
+    color: theme.colors.white,
+    fontSize: theme.fontSize.md,
+    fontFamily: theme.fonts.button,
   },
 });

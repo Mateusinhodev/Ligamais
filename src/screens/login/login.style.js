@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-
-const GREEN = '#3CB043';
+import theme from "../../constants/theme.js";
 
 const textShadow = {
   textShadowColor: 'rgba(0, 0, 0, 0.8)',
@@ -24,78 +23,80 @@ export const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 20,
+    top: 0,
     alignItems: 'center',
   },
   logo: {
-    width: 220,
+    width: 280,
     aspectRatio: 1,
   },
   formCard: {
     width: '100%',
-    paddingHorizontal: 24,
+    paddingHorizontal: theme.spacing.lg,
     paddingTop: 60,
-    paddingBottom: 40,
-    gap: 24,
+    paddingBottom: theme.spacing.xl + theme.spacing.sm,
+    gap: theme.spacing.lg,
   },
   title: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: '700',
+    color: theme.colors.white,
+    fontSize: theme.fontSize.xl,
+    fontFamily: theme.fonts.heading,
     textAlign: 'center',
     ...textShadow,
   },
   formContainer: {
     width: '100%',
-    gap: 16,
+    gap: theme.spacing.md,
   },
   inputGroup: {
     width: '100%',
-    gap: 8,
+    gap: theme.spacing.sm,
   },
   label: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+    color: theme.colors.white,
+    fontSize: theme.fontSize.sm,
+    fontFamily: theme.fonts.medium,
     ...textShadow,
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.18)',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 12,
+    borderRadius: theme.radius.md,
     paddingVertical: 14,
-    paddingHorizontal: 16,
-    color: '#fff',
-    fontSize: 15,
+    paddingHorizontal: theme.spacing.md,
+    color: theme.colors.white,
+    fontSize: theme.fontSize.md,
+    fontFamily: theme.fonts.body,
   },
   forgotPassword: {
-    color: GREEN,
-    fontSize: 14,
-    fontWeight: '600',
+    color: theme.colors.primary,
+    fontSize: theme.fontSize.sm,
+    fontFamily: theme.fonts.semiBold,
     textAlign: 'right',
-    marginTop: -8, // controla a distância independente do gap
+    marginTop: -8,
     ...textShadow,
   },
   buttonPrimary: {
-    backgroundColor: GREEN,
+    backgroundColor: theme.colors.primary,
     paddingVertical: 16,
-    borderRadius: 30,
+    borderRadius: theme.radius.pill,
     alignItems: 'center',
   },
   buttonPrimaryText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
+    color: theme.colors.white,
+    fontSize: theme.fontSize.md,
+    fontFamily: theme.fonts.button,
   },
   footerText: {
-    color: '#eee',
-    fontSize: 14,
+    color: theme.colors.white,
+    fontSize: theme.fontSize.sm,
+    fontFamily: theme.fonts.body,
     textAlign: 'center',
     ...textShadow,
   },
   footerLink: {
-    color: GREEN,
-    fontWeight: '700',
+    color: theme.colors.primary,
+    fontFamily: theme.fonts.semiBold,
   },
 });

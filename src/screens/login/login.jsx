@@ -32,7 +32,7 @@ function Login() {
                         locations={[0, 0.25, 1]}
                         style={styles.formCard}
                     >
-                        <Text style={styles.title}>Bem-vindo de volta</Text>
+                        <Text style={styles.title}>Bem-vindo de volta, jogador</Text>
 
                         <View style={styles.formContainer}>
                             <View style={styles.inputGroup}>
