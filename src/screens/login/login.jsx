@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 import { styles } from "./login.style.js";
 
 function Login() {
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleLogin() {
+        // TODO: integrar com autenticação real quando o backend estiver pronto
         console.log('Login com:', { email, password });
     }
 
@@ -32,7 +35,7 @@ function Login() {
                         locations={[0, 0.25, 1]}
                         style={styles.formCard}
                     >
-                        <Text style={styles.title}>Bem-vindo de volta, jogador</Text>
+                        <Text style={styles.title}>Bem-vindo de volta</Text>
 
                         <View style={styles.formContainer}>
                             <View style={styles.inputGroup}>
@@ -72,7 +75,7 @@ function Login() {
                             <Text style={styles.buttonPrimaryText}>Entrar</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => console.log('Ir para criar conta')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                             <Text style={styles.footerText}>
                                 Não tem conta? <Text style={styles.footerLink}>Criar conta</Text>
                             </Text>

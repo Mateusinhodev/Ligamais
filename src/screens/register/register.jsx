@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 import { styles } from "./register.style.js";
 
 function Register() {
+    const navigation = useNavigation();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     function handleRegister() {
+        // TODO: integrar com cadastro real quando o backend estiver pronto
         console.log('Cadastro com:', { name, email, password, confirmPassword });
     }
 
@@ -94,7 +97,7 @@ function Register() {
                             <Text style={styles.buttonPrimaryText}>Criar conta</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => console.log('Ir para login')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                             <Text style={styles.footerText}>
                                 Já tem conta? <Text style={styles.footerLink}>Entrar</Text>
                             </Text>

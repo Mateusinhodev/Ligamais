@@ -1,5 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import theme from "../../constants/theme.js";
+
+const { height } = Dimensions.get('window');
+const isSmallDevice = height < 700;
 
 const textShadow = {
   textShadowColor: 'rgba(0, 0, 0, 0.8)',
@@ -23,38 +26,40 @@ export const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 0,
+    top: isSmallDevice ? -30 : 0,
     alignItems: 'center',
   },
   logo: {
-    width: 280,
+    width: isSmallDevice ? 200 : 280,
     aspectRatio: 1,
   },
   formCard: {
     width: '100%',
-    paddingHorizontal: theme.spacing.lg,
-    paddingTop: 60,
-    paddingBottom: theme.spacing.xl + theme.spacing.sm,
-    gap: theme.spacing.lg,
+    paddingHorizontal: isSmallDevice ? theme.spacing.md : theme.spacing.lg,
+    paddingTop: isSmallDevice ? 30 : 60,
+    paddingBottom: isSmallDevice 
+      ? theme.spacing.lg 
+      : theme.spacing.xl + theme.spacing.sm,
+    gap: isSmallDevice ? theme.spacing.md : theme.spacing.lg,
   },
   title: {
     color: theme.colors.white,
-    fontSize: theme.fontSize.xl,
+    fontSize: isSmallDevice ? theme.fontSize.lg : theme.fontSize.xl,
     fontFamily: theme.fonts.heading,
     textAlign: 'center',
     ...textShadow,
   },
   formContainer: {
     width: '100%',
-    gap: theme.spacing.md,
+    gap: isSmallDevice ? theme.spacing.sm : theme.spacing.md,
   },
   inputGroup: {
     width: '100%',
-    gap: theme.spacing.sm,
+    gap: isSmallDevice ? theme.spacing.xs : theme.spacing.sm,
   },
   label: {
     color: theme.colors.white,
-    fontSize: theme.fontSize.sm,
+    fontSize: isSmallDevice ? theme.fontSize.xs : theme.fontSize.sm,
     fontFamily: theme.fonts.medium,
     ...textShadow,
   },
@@ -63,15 +68,15 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: theme.radius.md,
-    paddingVertical: 14,
+    paddingVertical: isSmallDevice ? 10 : 14,
     paddingHorizontal: theme.spacing.md,
     color: theme.colors.white,
-    fontSize: theme.fontSize.md,
+    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
     fontFamily: theme.fonts.body,
   },
   forgotPassword: {
     color: theme.colors.primary,
-    fontSize: theme.fontSize.sm,
+    fontSize: isSmallDevice ? theme.fontSize.xs : theme.fontSize.sm,
     fontFamily: theme.fonts.semiBold,
     textAlign: 'right',
     marginTop: -8,
@@ -79,18 +84,18 @@ export const styles = StyleSheet.create({
   },
   buttonPrimary: {
     backgroundColor: theme.colors.primary,
-    paddingVertical: 16,
+    paddingVertical: isSmallDevice ? 12 : 16,
     borderRadius: theme.radius.pill,
     alignItems: 'center',
   },
   buttonPrimaryText: {
     color: theme.colors.white,
-    fontSize: theme.fontSize.md,
+    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
     fontFamily: theme.fonts.button,
   },
   footerText: {
     color: theme.colors.white,
-    fontSize: theme.fontSize.sm,
+    fontSize: isSmallDevice ? theme.fontSize.xs : theme.fontSize.sm,
     fontFamily: theme.fonts.body,
     textAlign: 'center',
     ...textShadow,

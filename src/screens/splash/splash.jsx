@@ -1,7 +1,10 @@
 import { View, ImageBackground, Image, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { styles } from "./splash.style.js";
 
 function Splash() {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <ImageBackground 
@@ -21,14 +24,14 @@ function Splash() {
                     <View style={styles.buttonsContainer}>
                         <TouchableOpacity 
                             style={styles.buttonPrimary}
-                            onPress={() => console.log('Entrar')}
+                            onPress={() => navigation.navigate('Login')}
                         >
                             <Text style={styles.buttonPrimaryText}>Entrar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity 
                             style={styles.buttonSecondary}
-                            onPress={() => console.log('Criar conta')}
+                            onPress={() => navigation.navigate('Register')}
                         >
                             <Text style={styles.buttonSecondaryText}>Criar conta</Text>
                         </TouchableOpacity>

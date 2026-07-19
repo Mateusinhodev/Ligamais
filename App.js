@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 import { useFonts } from "expo-font";
 
@@ -14,9 +14,7 @@ import {
   Montserrat_600SemiBold,
 } from "@expo-google-fonts/montserrat";
 
-import SplashScreen from './src/screens/splash/splash.jsx';
-import Login from './src/screens/login/login.jsx';
-import Register from './src/screens/register/register.jsx';
+import Routes from './src/routes.js';
 
 export default function App() {
 
@@ -31,14 +29,12 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <SplashScreen/> ;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000' }}>
+        <ActivityIndicator size="large" color="#2E9E44" />
+      </View>
+    );
   }
 
-  return (
-    <View style={{ flex: 1 }}>
-      {/* <SplashScreen/> */}
-      {/* <Login/> */}
-      <Register/>
-    </View>
-  );
+  return <Routes />;
 }
