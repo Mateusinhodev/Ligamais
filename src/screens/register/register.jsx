@@ -2,18 +2,36 @@ import { useState } from "react";
 import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { useProfileForm } from "../../context/ProfileFormContext.jsx";
 import { styles } from "./register.style.js";
 
 function Register() {
     const navigation = useNavigation();
+    const { updateFormData } = useProfileForm();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     function handleRegister() {
-        // TODO: integrar com cadastro real quando o backend estiver pronto
-        console.log('Cadastro com:', { name, email, password, confirmPassword });
+        if (!name || !email || !password || !confirmPassword) {
+            console.log('Preencha todos os campos');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            console.log('As senhas não coincidem');
+            return;
+        }
+
+        // TODO: integrar com cadastro real (criar usuário via API) quando o backend estiver pronto
+        console.log('Cadastro com:', { name, email, password });
+
+        // Pré-preenche o nome completo no formulário de criação de perfil
+        updateFormData({ fullName: name });
+
+        navigation.navigate('CreateProfileStep1');
     }
 
     return (
