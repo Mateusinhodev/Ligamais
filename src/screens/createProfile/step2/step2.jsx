@@ -41,7 +41,7 @@ function CreateProfileStep2() {
         console.log('Perfil completo:', finalData);
 
         resetFormData();
-        // navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+        navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
     }
 
     return (

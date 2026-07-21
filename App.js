@@ -14,7 +14,7 @@ import {
   Montserrat_600SemiBold,
 } from "@expo-google-fonts/montserrat";
 
-import Routes from './src/routes.js';
+import Routes from './src/routes/routes.js';
 
 export default function App() {
 
