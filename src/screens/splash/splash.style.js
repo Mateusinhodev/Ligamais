@@ -32,28 +32,4 @@ export const styles = StyleSheet.create({
     gap: theme.spacing.md,
     marginBottom: isSmallDevice ? 40 : 80,
   },
-  buttonPrimary: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: isSmallDevice ? 12 : 16,
-    borderRadius: theme.radius.pill,
-    alignItems: 'center',
-  },
-  buttonPrimaryText: {
-    color: theme.colors.white,
-    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
-    fontFamily: theme.fonts.button,
-  },
-  buttonSecondary: {
-    backgroundColor: 'transparent',
-    borderWidth: 1.5,
-    borderColor: theme.colors.primary,
-    paddingVertical: isSmallDevice ? 12 : 16,
-    borderRadius: theme.radius.pill,
-    alignItems: 'center',
-  },
-  buttonSecondaryText: {
-    color: theme.colors.white,
-    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
-    fontFamily: theme.fonts.button,
-  },
 });

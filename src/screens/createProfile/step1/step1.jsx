@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect.jsx";
+import ScreenHeader from "../../../components/ScreenHeader/ScreenHeader.jsx";
+import StepperProgress from "../../../components/StepperProgress/StepperProgress.jsx";
+import FormInput from "../../../components/FormInput/FormInput.jsx";
+import Button from "../../../components/Button/Button.jsx";
 import { styles } from "./step1.style.js";
 
 const ESTADOS = [
@@ -59,32 +63,16 @@ function CreateProfileStep1() {
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
         >
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#1A1A1A" />
-                </TouchableOpacity>
-                <View style={styles.headerTitleContainer}>
-                    <Text style={styles.headerTitle}>Criar Perfil</Text>
-                    <Text style={styles.headerSubtitle}>Passo 1 de 2</Text>
-                </View>
-                <View style={{ width: 24 }} />
-            </View>
+            <ScreenHeader 
+                title="Criar Perfil" 
+                subtitle="Passo 1 de 2" 
+                onBack={() => navigation.goBack()} 
+            />
 
-            <View style={styles.stepperContainer}>
-                <View style={styles.stepperItem}>
-                    <View style={[styles.stepCircle, styles.stepCircleActive]}>
-                        <Text style={styles.stepCircleText}>1</Text>
-                    </View>
-                    <Text style={styles.stepLabelActive}>Dados Pessoais</Text>
-                </View>
-                <View style={styles.stepperLineActive} />
-                <View style={styles.stepperItem}>
-                    <View style={styles.stepCircle}>
-                        <Text style={styles.stepCircleTextInactive}>2</Text>
-                    </View>
-                    <Text style={styles.stepLabel}>Dados Esportivos</Text>
-                </View>
-            </View>
+            <StepperProgress 
+                currentStep={1} 
+                labels={['Dados Pessoais', 'Dados Esportivos']} 
+            />
 
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Dados Pessoais</Text>
@@ -107,33 +95,27 @@ function CreateProfileStep1() {
                 </TouchableOpacity>
 
                 <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Nome completo *</Text>
-                    <TextInput
-                        style={styles.input}
+                    <FormInput
+                        label="Nome completo *"
                         placeholder="Digite seu nome completo"
-                        placeholderTextColor="#999"
                         value={fullName}
                         onChangeText={setFullName}
                     />
                 </View>
 
                 <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Apelido *</Text>
-                    <TextInput
-                        style={styles.input}
+                    <FormInput
+                        label="Apelido *"
                         placeholder="Como te chamam"
-                        placeholderTextColor="#999"
                         value={nickname}
                         onChangeText={setNickname}
                     />
                 </View>
 
                 <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Data de nascimento *</Text>
-                    <TextInput
-                        style={styles.input}
+                    <FormInput
+                        label="Data de nascimento *"
                         placeholder="DD/MM/AAAA"
-                        placeholderTextColor="#999"
                         keyboardType="numeric"
                         value={birthDate}
                         onChangeText={setBirthDate}
@@ -142,11 +124,9 @@ function CreateProfileStep1() {
 
                 <View style={styles.rowGroup}>
                     <View style={[styles.inputGroup, styles.flexTwo]}>
-                        <Text style={styles.label}>Cidade *</Text>
-                        <TextInput
-                            style={styles.input}
+                        <FormInput
+                            label="Cidade *"
                             placeholder="Sua cidade"
-                            placeholderTextColor="#999"
                             value={city}
                             onChangeText={setCity}
                         />
@@ -164,9 +144,7 @@ function CreateProfileStep1() {
                     </View>
                 </View>
 
-                <TouchableOpacity style={styles.buttonPrimary} onPress={handleContinue}>
-                    <Text style={styles.buttonPrimaryText}>Continuar</Text>
-                </TouchableOpacity>
+                <Button title="Continuar" onPress={handleContinue} style={styles.continueButton} />
             </View>
         </ScrollView>
     );

@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { useProfileForm } from "../../context/ProfileFormContext.jsx";
+import Logo from "../../components/Logo/Logo.jsx";
+import Button from "../../components/Button/Button.jsx";
+import FormInput from "../../components/FormInput/FormInput.jsx";
 import { styles } from "./register.style.js";
 
 function Register() {
@@ -43,11 +46,7 @@ function Register() {
             > 
                 <View style={styles.content}>
                     <View style={styles.logoContainer}>
-                        <Image 
-                            source={require('../../../assets/logo.png')}
-                            resizeMode="contain"
-                            style={styles.logo}
-                        />
+                        <Logo style={styles.logo} />
                     </View>
 
                     <LinearGradient
@@ -58,62 +57,45 @@ function Register() {
                         <Text style={styles.title}>Crie sua conta</Text>
 
                         <View style={styles.formContainer}>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>Nome completo</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Seu nome"
-                                    placeholderTextColor="#ccc"
-                                    autoCapitalize="words"
-                                    value={name}
-                                    onChangeText={setName}
-                                />
-                            </View>
+                            <FormInput
+                                label="Nome completo"
+                                variant="dark"
+                                placeholder="Seu nome"
+                                autoCapitalize="words"
+                                value={name}
+                                onChangeText={setName}
+                            />
 
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>E-mail</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="seuemail@exemplo.com"
-                                    placeholderTextColor="#ccc"
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    value={email}
-                                    onChangeText={setEmail}
-                                />
-                            </View>
+                            <FormInput
+                                label="E-mail"
+                                variant="dark"
+                                placeholder="seuemail@exemplo.com"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                value={email}
+                                onChangeText={setEmail}
+                            />
 
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>Senha</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Crie uma senha"
-                                    placeholderTextColor="#ccc"
-                                    secureTextEntry
-                                    value={password}
-                                    onChangeText={setPassword}
-                                />
-                            </View>
+                            <FormInput
+                                label="Senha"
+                                variant="dark"
+                                placeholder="Crie uma senha"
+                                secureTextEntry
+                                value={password}
+                                onChangeText={setPassword}
+                            />
 
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>Confirmar senha</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Repita sua senha"
-                                    placeholderTextColor="#ccc"
-                                    secureTextEntry
-                                    value={confirmPassword}
-                                    onChangeText={setConfirmPassword}
-                                />
-                            </View>
+                            <FormInput
+                                label="Confirmar senha"
+                                variant="dark"
+                                placeholder="Repita sua senha"
+                                secureTextEntry
+                                value={confirmPassword}
+                                onChangeText={setConfirmPassword}
+                            />
                         </View>
 
-                        <TouchableOpacity 
-                            style={styles.buttonPrimary}
-                            onPress={handleRegister}
-                        >
-                            <Text style={styles.buttonPrimaryText}>Criar conta</Text>
-                        </TouchableOpacity>
+                        <Button title="Criar conta" variant="primary" onPress={handleRegister} />
 
                         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                             <Text style={styles.footerText}>

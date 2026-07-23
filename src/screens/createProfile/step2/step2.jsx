@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect.jsx";
+import ScreenHeader from "../../../components/ScreenHeader/ScreenHeader.jsx";
+import StepperProgress from "../../../components/StepperProgress/StepperProgress.jsx";
+import FormInput from "../../../components/FormInput/FormInput.jsx";
+import Button from "../../../components/Button/Button.jsx";
 import { styles } from "./step2.style.js";
 
 const POSICOES_CAMPO = [
@@ -50,32 +53,16 @@ function CreateProfileStep2() {
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
         >
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#1A1A1A" />
-                </TouchableOpacity>
-                <View style={styles.headerTitleContainer}>
-                    <Text style={styles.headerTitle}>Criar Perfil</Text>
-                    <Text style={styles.headerSubtitle}>Passo 2 de 2</Text>
-                </View>
-                <View style={{ width: 24 }} />
-            </View>
+            <ScreenHeader 
+                title="Criar Perfil" 
+                subtitle="Passo 2 de 2" 
+                onBack={() => navigation.goBack()} 
+            />
 
-            <View style={styles.stepperContainer}>
-                <View style={styles.stepperItem}>
-                    <View style={[styles.stepCircle, styles.stepCircleActive]}>
-                        <Text style={styles.stepCircleText}>1</Text>
-                    </View>
-                    <Text style={styles.stepLabelActive}>Dados Pessoais</Text>
-                </View>
-                <View style={styles.stepperLineActive} />
-                <View style={styles.stepperItem}>
-                    <View style={[styles.stepCircle, styles.stepCircleActive]}>
-                        <Text style={styles.stepCircleText}>2</Text>
-                    </View>
-                    <Text style={styles.stepLabelActive}>Dados Esportivos</Text>
-                </View>
-            </View>
+            <StepperProgress 
+                currentStep={2} 
+                labels={['Dados Pessoais', 'Dados Esportivos']} 
+            />
 
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Dados Esportivos</Text>
@@ -127,11 +114,9 @@ function CreateProfileStep2() {
                 </View>
 
                 <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Número preferido</Text>
-                    <TextInput
-                        style={styles.input}
+                    <FormInput
+                        label="Número preferido"
                         placeholder="Ex: 10"
-                        placeholderTextColor="#999"
                         keyboardType="numeric"
                         maxLength={3}
                         value={preferredNumber}
@@ -140,9 +125,7 @@ function CreateProfileStep2() {
                     <Text style={styles.helperText}>Número da camisa que você prefere usar (opcional)</Text>
                 </View>
 
-                <TouchableOpacity style={styles.buttonPrimary} onPress={handleFinish}>
-                    <Text style={styles.buttonPrimaryText}>Finalizar Perfil</Text>
-                </TouchableOpacity>
+                <Button title="Finalizar Perfil" onPress={handleFinish} style={styles.finishButton} />
             </View>
         </ScrollView>
     );

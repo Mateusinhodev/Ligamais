@@ -34,7 +34,6 @@ export const styles = StyleSheet.create({
   },
   logo: {
     width: isSmallDevice ? 190 : 280,
-    aspectRatio: 1,
   },
   formCard: {
     width: '100%',
@@ -55,38 +54,6 @@ export const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     gap: isSmallDevice ? theme.spacing.sm : theme.spacing.sm + theme.spacing.xs,
-  },
-  inputGroup: {
-    width: '100%',
-    gap: isSmallDevice ? theme.spacing.xs : theme.spacing.sm,
-  },
-  label: {
-    color: theme.colors.white,
-    fontSize: isSmallDevice ? theme.fontSize.xs : theme.fontSize.sm,
-    fontFamily: theme.fonts.medium,
-    ...textShadow,
-  },
-  input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.18)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: theme.radius.md,
-    paddingVertical: isSmallDevice ? 10 : 14,
-    paddingHorizontal: theme.spacing.md,
-    color: theme.colors.white,
-    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
-    fontFamily: theme.fonts.body,
-  },
-  buttonPrimary: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: isSmallDevice ? 12 : 16,
-    borderRadius: theme.radius.pill,
-    alignItems: 'center',
-  },
-  buttonPrimaryText: {
-    color: theme.colors.white,
-    fontSize: isSmallDevice ? theme.fontSize.sm : theme.fontSize.md,
-    fontFamily: theme.fonts.button,
   },
   footerText: {
     color: theme.colors.white,

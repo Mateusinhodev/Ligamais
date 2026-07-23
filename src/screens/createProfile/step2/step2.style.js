@@ -10,64 +10,6 @@ export const styles = StyleSheet.create({
     padding: theme.spacing.lg,
     paddingBottom: theme.spacing.xl,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: theme.spacing.lg,
-  },
-  headerTitleContainer: {
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: theme.fontSize.lg,
-    fontFamily: theme.fonts.heading,
-    color: theme.colors.text,
-  },
-  headerSubtitle: {
-    fontSize: theme.fontSize.sm,
-    fontFamily: theme.fonts.body,
-    color: theme.colors.textSecondary,
-  },
-  stepperContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: theme.spacing.lg,
-  },
-  stepperItem: {
-    alignItems: 'center',
-    width: 100,
-  },
-  stepCircle: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: theme.colors.border,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: theme.spacing.xs,
-  },
-  stepCircleActive: {
-    backgroundColor: theme.colors.primary,
-  },
-  stepCircleText: {
-    color: theme.colors.white,
-    fontFamily: theme.fonts.button,
-    fontSize: theme.fontSize.sm,
-  },
-  stepLabelActive: {
-    fontSize: theme.fontSize.xs,
-    fontFamily: theme.fonts.semiBold,
-    color: theme.colors.primary,
-    textAlign: 'center',
-  },
-  stepperLineActive: {
-    flex: 1,
-    height: 2,
-    backgroundColor: theme.colors.primary,
-    marginTop: 13,
-    marginHorizontal: -20,
-  },
   card: {
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radius.lg,
@@ -96,38 +38,11 @@ export const styles = StyleSheet.create({
     color: theme.colors.text,
     marginBottom: theme.spacing.xs,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    paddingVertical: 12,
-    paddingHorizontal: theme.spacing.md,
-    fontSize: theme.fontSize.md,
-    fontFamily: theme.fonts.body,
-    color: theme.colors.text,
-    backgroundColor: theme.colors.surface,
-  },
   helperText: {
     fontSize: theme.fontSize.xs,
     fontFamily: theme.fonts.body,
     color: theme.colors.textSecondary,
     marginTop: theme.spacing.xs,
-  },
-  pickerWrapper: {
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surface,
-    justifyContent: 'center',
-    height: 48,
-    overflow: 'hidden',
-  },
-  picker: {
-    color: theme.colors.text,
-    fontSize: theme.fontSize.md,
-    fontFamily: theme.fonts.body,
-    height: 48,
-    paddingHorizontal: theme.spacing.md,
   },
   footOptionsRow: {
     flexDirection: 'row',
@@ -169,16 +84,7 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.medium,
     color: theme.colors.text,
   },
-  buttonPrimary: {
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 16,
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
+  finishButton: {
     marginTop: theme.spacing.sm,
-  },
-  buttonPrimaryText: {
-    color: theme.colors.white,
-    fontSize: theme.fontSize.md,
-    fontFamily: theme.fonts.button,
   },
 });

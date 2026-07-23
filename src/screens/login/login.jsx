@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import Logo from "../../components/Logo/Logo.jsx";
+import Button from "../../components/Button/Button.jsx";
+import FormInput from "../../components/FormInput/FormInput.jsx";
 import { styles } from "./login.style.js";
 
 function Login() {
@@ -23,11 +26,7 @@ function Login() {
             > 
                 <View style={styles.content}>
                     <View style={styles.logoContainer}>
-                        <Image 
-                            source={require('../../../assets/logo.png')}
-                            resizeMode="contain"
-                            style={styles.logo}
-                        />
+                        <Logo style={styles.logo} />
                     </View>
 
                     <LinearGradient
@@ -38,42 +37,31 @@ function Login() {
                         <Text style={styles.title}>Bem-vindo de volta</Text>
 
                         <View style={styles.formContainer}>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>E-mail</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="seuemail@exemplo.com"
-                                    placeholderTextColor="#ccc"
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    value={email}
-                                    onChangeText={setEmail}
-                                />
-                            </View>
+                            <FormInput
+                                label="E-mail"
+                                variant="dark"
+                                placeholder="seuemail@exemplo.com"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                value={email}
+                                onChangeText={setEmail}
+                            />
 
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>Senha</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Sua senha"
-                                    placeholderTextColor="#ccc"
-                                    secureTextEntry
-                                    value={password}
-                                    onChangeText={setPassword}
-                                />
-                            </View>
+                            <FormInput
+                                label="Senha"
+                                variant="dark"
+                                placeholder="Sua senha"
+                                secureTextEntry
+                                value={password}
+                                onChangeText={setPassword}
+                            />
 
                             <TouchableOpacity onPress={() => console.log('Esqueci a senha')}>
                                 <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity 
-                            style={styles.buttonPrimary}
-                            onPress={handleLogin}
-                        >
-                            <Text style={styles.buttonPrimaryText}>Entrar</Text>
-                        </TouchableOpacity>
+                        <Button title="Entrar" variant="primary" onPress={handleLogin} />
 
                         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                             <Text style={styles.footerText}>
