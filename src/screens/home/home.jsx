@@ -1,15 +1,22 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useProfileForm } from "../../context/ProfileFormContext.jsx";
 import { styles } from "./home.style.js";
 
-function Home() {
-    // TODO: substituir por dados reais do usuário logado quando o backend estiver pronto
+function Home({ navigation }) {
+    const { profile } = useProfileForm();
+
+    // TODO: substituir competições e convites por dados da API quando o backend estiver pronto
     const user = {
-        name: 'Mateus',
-        avatar: null,
+        name: profile?.nickname || profile?.fullName?.split(' ')[0] || 'Atleta',
+        avatar: profile?.photo ?? null,
         activeCompetitions: 3,
         pendingInvites: 2,
     };
+
+    function openProfile() {
+        navigation.navigate('Profile');
+    }
 
     return (
         <ScrollView 
@@ -31,7 +38,7 @@ function Home() {
                         {user.pendingInvites > 0 && <View style={styles.notificationDot} />}
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => console.log('Ir para perfil')}>
+                    <TouchableOpacity onPress={openProfile}>
                         <View style={styles.avatarCircle}>
                             {user.avatar ? (
                                 <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
@@ -88,16 +95,13 @@ function Home() {
                     <Ionicons name="chevron-forward" size={20} color="#999" />
                 </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={styles.actionCard}
-                    onPress={() => console.log('Ir para Meu Perfil')}
-                >
+                <TouchableOpacity style={styles.actionCard} onPress={openProfile}>
                     <View style={styles.actionIconContainer}>
                         <Ionicons name="person-outline" size={24} color="#2E9E44" />
                     </View>
                     <View style={styles.actionTextContainer}>
                         <Text style={styles.actionTitle}>Meu Perfil</Text>
-                        <Text style={styles.actionSubtitle}>Veja suas estatísticas</Text>
+                        <Text style={styles.actionSubtitle}>Veja seus dados esportivos</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={20} color="#999" />
                 </TouchableOpacity>

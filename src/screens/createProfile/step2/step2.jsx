@@ -16,7 +16,7 @@ const POSICOES_FUTSAL = [
 
 function CreateProfileStep2() {
     const navigation = useNavigation();
-    const { formData, updateFormData, resetFormData } = useProfileForm();
+    const { formData, completeProfile } = useProfileForm();
 
     const [fieldPosition, setFieldPosition] = useState(formData.fieldPosition);
     const [futsalPosition, setFutsalPosition] = useState(formData.futsalPosition);
@@ -29,18 +29,16 @@ function CreateProfileStep2() {
             return;
         }
 
-        const finalData = {
-            ...formData,
+        const finalData = completeProfile({
             fieldPosition,
             futsalPosition,
             dominantFoot,
             preferredNumber,
-        };
+        });
 
         // TODO: enviar finalData para a API quando o backend estiver pronto
         console.log('Perfil completo:', finalData);
 
-        resetFormData();
         navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
     }
 

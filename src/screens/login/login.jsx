@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import { Alert, View, ImageBackground, Image, Text, TextInput, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./login.style.js";
@@ -10,8 +10,14 @@ function Login() {
     const [password, setPassword] = useState('');
 
     function handleLogin() {
-        // TODO: integrar com autenticação real quando o backend estiver pronto
-        console.log('Login com:', { email, password });
+        if (!email.trim() || !password.trim()) {
+            Alert.alert('Campos obrigatórios', 'Informe seu e-mail e sua senha para continuar.');
+            return;
+        }
+
+        // TODO: substituir pelo fluxo de autenticação real quando o backend estiver pronto
+        console.log('Login com:', { email });
+        navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
     }
 
     return (
