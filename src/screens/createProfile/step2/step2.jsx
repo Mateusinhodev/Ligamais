@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
+import { useAuth } from "../../../context/AuthContext.jsx";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect.jsx";
 import ScreenHeader from "../../../components/ScreenHeader/ScreenHeader.jsx";
 import StepperProgress from "../../../components/StepperProgress/StepperProgress.jsx";
@@ -19,14 +20,15 @@ const POSICOES_FUTSAL = [
 
 function CreateProfileStep2() {
     const navigation = useNavigation();
-    const { formData, updateFormData, resetFormData } = useProfileForm();
+    const { formData, resetFormData } = useProfileForm();
+    const { login } = useAuth();
 
     const [fieldPosition, setFieldPosition] = useState(formData.fieldPosition);
     const [futsalPosition, setFutsalPosition] = useState(formData.futsalPosition);
     const [dominantFoot, setDominantFoot] = useState(formData.dominantFoot);
     const [preferredNumber, setPreferredNumber] = useState(formData.preferredNumber);
 
-    function handleFinish() {
+    async function handleFinish() {
         if (!fieldPosition || !futsalPosition) {
             console.log('Preencha os campos obrigatórios');
             return;
@@ -43,8 +45,13 @@ function CreateProfileStep2() {
         // TODO: enviar finalData para a API quando o backend estiver pronto
         console.log('Perfil completo:', finalData);
 
+        const result = await login(finalData);
+
         resetFormData();
-        navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+
+        if (result.success) {
+            navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+        }
     }
 
     return (

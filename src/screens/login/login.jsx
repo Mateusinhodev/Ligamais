@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext.jsx";
 import Logo from "../../components/Logo/Logo.jsx";
 import Button from "../../components/Button/Button.jsx";
 import FormInput from "../../components/FormInput/FormInput.jsx";
@@ -9,12 +10,24 @@ import { styles } from "./login.style.js";
 
 function Login() {
     const navigation = useNavigation();
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleLogin() {
-        // TODO: integrar com autenticação real quando o backend estiver pronto
-        console.log('Login com:', { email, password });
+    async function handleLogin() {
+        if (!email || !password) {
+            console.log('Preencha e-mail e senha');
+            return;
+        }
+
+        // TODO: substituir por chamada real à API de autenticação quando o backend existir
+        const result = await login({ email, name: email.split('@')[0] });
+
+        if (result.success) {
+            navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+        } else {
+            console.log('Erro ao entrar');
+        }
     }
 
     return (
