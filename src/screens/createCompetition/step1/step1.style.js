@@ -39,14 +39,10 @@ export const styles = StyleSheet.create({
   flexOne: {
     flex: 1,
   },
-  flexTwo: {
-    flex: 2,
-  },
-  label: {
-    fontSize: theme.fontSize.sm,
-    fontFamily: theme.fonts.semiBold,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
+  textArea: {
+    height: 90,
+    textAlignVertical: 'top',
+    paddingTop: 12,
   },
   continueButton: {
     marginTop: theme.spacing.sm,

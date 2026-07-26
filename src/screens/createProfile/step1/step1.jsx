@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
+// import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect.jsx";
@@ -9,6 +9,7 @@ import ScreenHeader from "../../../components/ScreenHeader/ScreenHeader.jsx";
 import StepperProgress from "../../../components/StepperProgress/StepperProgress.jsx";
 import FormInput from "../../../components/FormInput/FormInput.jsx";
 import Button from "../../../components/Button/Button.jsx";
+import ImagePickerAvatar from "../../../components/ImagePickerAvatar/ImagePickerAvatar.jsx";
 import { styles } from "./step1.style.js";
 
 const ESTADOS = [
@@ -78,22 +79,12 @@ function CreateProfileStep1() {
                 <Text style={styles.cardTitle}>Dados Pessoais</Text>
                 <Text style={styles.cardSubtitle}>Conte para a gente quem você é.</Text>
 
-                <TouchableOpacity style={styles.photoContainer} onPress={handlePickPhoto}>
-                    <View style={styles.photoWrapper}>
-                        <View style={styles.photoCircle}>
-                            {photo ? (
-                                <Image source={{ uri: photo }} style={styles.photoImage} />
-                            ) : (
-                                <Ionicons name="camera" size={28} color="#fff" />
-                            )}
-                        </View>
-                        <View style={styles.photoEditBadge}>
-                            <Ionicons name="camera-outline" size={14} color="#fff" />
-                        </View>
-                    </View>
-                    <Text style={styles.photoLabel}>Adicionar foto</Text>
-                </TouchableOpacity>
-
+                <ImagePickerAvatar 
+                    value={photo} 
+                    onChange={setPhoto} 
+                    label="Adicionar foto"
+                />
+                
                 <View style={styles.inputGroup}>
                     <FormInput
                         label="Nome completo *"

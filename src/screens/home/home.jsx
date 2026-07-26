@@ -64,7 +64,7 @@ function Home() {
             <View style={styles.actionsContainer}>
                 <TouchableOpacity 
                     style={styles.actionCard}
-                    onPress={() => console.log('Ir para Criar Competição')}
+                    onPress={() => navigation.navigate('CreateCompetitionStep1')}
                 >
                     <View style={styles.actionIconContainer}>
                         <Ionicons name="add-circle-outline" size={24} color="#2E9E44" />

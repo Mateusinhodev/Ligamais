@@ -46,4 +46,18 @@ export const styles = StyleSheet.create({
     fontSize: theme.fontSize.xs,
     fontFamily: theme.fonts.body,
   },
+  inputWrapper: {
+    position: 'relative',
+    width: '100%',
+  },
+  inputWithIcon: {
+    paddingRight: 40,
+  },
+  iconContainer: {
+    position: 'absolute',
+    right: theme.spacing.md,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+  },
 });
