@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
 import { useAuth } from "../../../context/AuthContext.jsx";
@@ -20,37 +20,43 @@ const POSICOES_FUTSAL = [
 
 function CreateProfileStep2() {
     const navigation = useNavigation();
-    const { formData, resetFormData } = useProfileForm();
-    const { login } = useAuth();
+    const { formData, completeProfile, resetFormData } = useProfileForm();
+    const { user, login, updateUser } = useAuth();
 
-    const [fieldPosition, setFieldPosition] = useState(formData.fieldPosition);
-    const [futsalPosition, setFutsalPosition] = useState(formData.futsalPosition);
-    const [dominantFoot, setDominantFoot] = useState(formData.dominantFoot);
-    const [preferredNumber, setPreferredNumber] = useState(formData.preferredNumber);
+    const isEditMode = Boolean(user);
+    const initialSource = user ?? formData;
+
+    const [fieldPosition, setFieldPosition] = useState(initialSource.fieldPosition ?? '');
+    const [futsalPosition, setFutsalPosition] = useState(initialSource.futsalPosition ?? '');
+    const [dominantFoot, setDominantFoot] = useState(initialSource.dominantFoot ?? 'right');
+    const [preferredNumber, setPreferredNumber] = useState(initialSource.preferredNumber ?? '');
 
     async function handleFinish() {
         if (!fieldPosition || !futsalPosition) {
-            console.log('Preencha os campos obrigatórios');
+            Alert.alert('Campos obrigatórios', 'Selecione sua posição no campo e no futsal.');
             return;
         }
 
-        const finalData = {
-            ...formData,
+        const finalData = completeProfile({
             fieldPosition,
             futsalPosition,
             dominantFoot,
             preferredNumber,
-        };
+        });
 
         // TODO: enviar finalData para a API quando o backend estiver pronto
         console.log('Perfil completo:', finalData);
 
-        const result = await login(finalData);
+        const result = isEditMode 
+            ? await updateUser(finalData)
+            : await login(finalData);
 
         resetFormData();
 
         if (result.success) {
             navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+        } else {
+            Alert.alert('Erro ao salvar', 'Não foi possível concluir o perfil. Tente novamente.');
         }
     }
 
@@ -61,7 +67,7 @@ function CreateProfileStep2() {
             keyboardShouldPersistTaps="handled"
         >
             <ScreenHeader 
-                title="Criar Perfil" 
+                title={isEditMode ? 'Editar Perfil' : 'Criar Perfil'} 
                 subtitle="Passo 2 de 2" 
                 onBack={() => navigation.goBack()} 
             />
@@ -132,7 +138,11 @@ function CreateProfileStep2() {
                     <Text style={styles.helperText}>Número da camisa que você prefere usar (opcional)</Text>
                 </View>
 
-                <Button title="Finalizar Perfil" onPress={handleFinish} style={styles.finishButton} />
+                <Button 
+                    title={isEditMode ? 'Salvar alterações' : 'Finalizar Perfil'} 
+                    onPress={handleFinish} 
+                    style={styles.finishButton} 
+                />
             </View>
         </ScrollView>
     );

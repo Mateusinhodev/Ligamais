@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Alert, View, Text, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import * as ImagePicker from "expo-image-picker";
-import { Ionicons } from "@expo/vector-icons";
 import { useProfileForm } from "../../../context/ProfileFormContext.jsx";
+import { useAuth } from "../../../context/AuthContext.jsx";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect.jsx";
 import ScreenHeader from "../../../components/ScreenHeader/ScreenHeader.jsx";
 import StepperProgress from "../../../components/StepperProgress/StepperProgress.jsx";
@@ -21,36 +20,21 @@ const ESTADOS = [
 function CreateProfileStep1() {
     const navigation = useNavigation();
     const { formData, updateFormData } = useProfileForm();
+    const { user } = useAuth();
 
-    const [fullName, setFullName] = useState(formData.fullName);
-    const [nickname, setNickname] = useState(formData.nickname);
-    const [birthDate, setBirthDate] = useState(formData.birthDate);
-    const [city, setCity] = useState(formData.city);
-    const [state, setState] = useState(formData.state);
-    const [photo, setPhoto] = useState(formData.photo);
+    const isEditMode = Boolean(user);
+    const initialSource = user ?? formData;
 
-    async function handlePickPhoto() {
-        const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (!permission.granted) {
-            console.log('Permissão de galeria negada');
-            return;
-        }
-
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 0.7,
-        });
-
-        if (!result.canceled) {
-            setPhoto(result.assets[0].uri);
-        }
-    }
+    const [fullName, setFullName] = useState(initialSource.fullName ?? '');
+    const [nickname, setNickname] = useState(initialSource.nickname ?? '');
+    const [birthDate, setBirthDate] = useState(initialSource.birthDate ?? '');
+    const [city, setCity] = useState(initialSource.city ?? '');
+    const [state, setState] = useState(initialSource.state ?? '');
+    const [photo, setPhoto] = useState(initialSource.photo ?? null);
 
     function handleContinue() {
-        if (!fullName || !nickname || !birthDate || !city || !state) {
-            console.log('Preencha todos os campos obrigatórios');
+        if (!fullName.trim() || !nickname.trim() || !birthDate.trim() || !city.trim() || !state) {
+            Alert.alert('Campos obrigatórios', 'Preencha todos os campos para continuar.');
             return;
         }
 
@@ -65,7 +49,7 @@ function CreateProfileStep1() {
             keyboardShouldPersistTaps="handled"
         >
             <ScreenHeader 
-                title="Criar Perfil" 
+                title={isEditMode ? 'Editar Perfil' : 'Criar Perfil'} 
                 subtitle="Passo 1 de 2" 
                 onBack={() => navigation.goBack()} 
             />
@@ -84,7 +68,7 @@ function CreateProfileStep1() {
                     onChange={setPhoto} 
                     label="Adicionar foto"
                 />
-                
+
                 <View style={styles.inputGroup}>
                     <FormInput
                         label="Nome completo *"

@@ -44,8 +44,10 @@ export function AuthProvider({ children }) {
         try {
             await AsyncStorage.removeItem(STORAGE_KEY);
             setUser(null);
+            return { success: true };
         } catch (error) {
             console.log('Erro ao fazer logout:', error);
+            return { success: false, error };
         }
     }
 
@@ -54,8 +56,10 @@ export function AuthProvider({ children }) {
         try {
             await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUser));
             setUser(updatedUser);
+            return { success: true };
         } catch (error) {
             console.log('Erro ao atualizar usuário:', error);
+            return { success: false, error };
         }
     }
 

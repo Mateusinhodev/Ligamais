@@ -2,12 +2,16 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./ScreenHeader.style.js";
 
-function ScreenHeader({ title, subtitle, onBack, rightIcon, onRightPress }) {
+function ScreenHeader({ title, subtitle, onBack, showBack = true, rightIcon, onRightPress }) {
     return (
         <View style={styles.header}>
-            <TouchableOpacity onPress={onBack}>
-                <Ionicons name="arrow-back" size={24} color="#1A1A1A" />
-            </TouchableOpacity>
+            {showBack ? (
+                <TouchableOpacity onPress={onBack}>
+                    <Ionicons name="arrow-back" size={24} color="#1A1A1A" />
+                </TouchableOpacity>
+            ) : (
+                <View style={{ width: 24 }} />
+            )}
 
             <View style={styles.headerTitleContainer}>
                 <Text style={styles.headerTitle}>{title}</Text>

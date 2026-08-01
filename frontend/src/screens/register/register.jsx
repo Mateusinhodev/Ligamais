@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, ImageBackground, Text, TouchableOpacity } from "react-native";
+import { Alert, View, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { useProfileForm } from "../../context/ProfileFormContext.jsx";
@@ -18,13 +18,13 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     function handleRegister() {
-        if (!name || !email || !password || !confirmPassword) {
-            console.log('Preencha todos os campos');
+        if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+            Alert.alert('Campos obrigatórios', 'Preencha todos os campos para continuar.');
             return;
         }
 
         if (password !== confirmPassword) {
-            console.log('As senhas não coincidem');
+            Alert.alert('Senhas diferentes', 'As senhas informadas não coincidem. Verifique e tente novamente.');
             return;
         }
 

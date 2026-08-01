@@ -22,12 +22,25 @@ export function ProfileFormProvider({ children }) {
     setFormData((prev) => ({ ...prev, ...fields }));
   }
 
+  function completeProfile(fields) {
+    const completedProfile = { ...formData, ...fields };
+    setFormData(completedProfile);
+    return completedProfile;
+  }
+
   function resetFormData() {
     setFormData(initialState);
   }
 
   return (
-    <ProfileFormContext.Provider value={{ formData, updateFormData, resetFormData }}>
+    <ProfileFormContext.Provider
+      value={{
+        formData,
+        updateFormData,
+        completeProfile,
+        resetFormData,
+      }}
+    >
       {children}
     </ProfileFormContext.Provider>
   );

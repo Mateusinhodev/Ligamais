@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, ImageBackground, Text, TouchableOpacity } from "react-native";
+import { Alert, View, ImageBackground, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -15,8 +15,8 @@ function Login() {
     const [password, setPassword] = useState('');
 
     async function handleLogin() {
-        if (!email || !password) {
-            console.log('Preencha e-mail e senha');
+        if (!email.trim() || !password.trim()) {
+            Alert.alert('Campos obrigatórios', 'Informe seu e-mail e sua senha para continuar.');
             return;
         }
 
@@ -26,7 +26,7 @@ function Login() {
         if (result.success) {
             navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
         } else {
-            console.log('Erro ao entrar');
+            Alert.alert('Erro ao entrar', 'Não foi possível concluir o login. Tente novamente.');
         }
     }
 
