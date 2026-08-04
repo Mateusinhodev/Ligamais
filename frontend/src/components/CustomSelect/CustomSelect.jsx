@@ -8,8 +8,9 @@ function CustomSelect({ label, placeholder = "Selecione", options, value, onChan
 
     const selectedOption = options.find((opt) => opt.value === value);
 
-    function handleSelect(optionValue) {
-        onChange(optionValue);
+    function handleSelect(option) {
+        if (option.disabled) return;
+        onChange(option.value);
         setIsOpen(false);
     }
 
@@ -20,9 +21,14 @@ function CustomSelect({ label, placeholder = "Selecione", options, value, onChan
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
-                <Text style={selectedOption ? styles.selectedText : styles.placeholderText}>
-                    {selectedOption ? selectedOption.label : placeholder}
-                </Text>
+                <View style={styles.selectedContentRow}>
+                    {selectedOption?.color && (
+                        <View style={[styles.colorDot, { backgroundColor: selectedOption.color }]} />
+                    )}
+                    <Text style={selectedOption ? styles.selectedText : styles.placeholderText}>
+                        {selectedOption ? selectedOption.label : placeholder}
+                    </Text>
+                </View>
                 <Ionicons name="chevron-down" size={18} color="#666" />
             </TouchableOpacity>
 
@@ -50,18 +56,33 @@ function CustomSelect({ label, placeholder = "Selecione", options, value, onChan
                                     style={[
                                         styles.optionItem,
                                         item.value === value && styles.optionItemActive,
+                                        item.disabled && styles.optionItemDisabled,
                                     ]}
-                                    onPress={() => handleSelect(item.value)}
+                                    onPress={() => handleSelect(item)}
+                                    disabled={item.disabled}
                                 >
-                                    <Text 
-                                        style={[
-                                            styles.optionText,
-                                            item.value === value && styles.optionTextActive,
-                                        ]}
-                                    >
-                                        {item.label}
-                                    </Text>
-                                    {item.value === value && (
+                                    <View style={styles.optionContentRow}>
+                                        {item.color && (
+                                            <View style={[styles.colorDot, { backgroundColor: item.color }]} />
+                                        )}
+                                        <View style={styles.optionTextContainer}>
+                                            <Text 
+                                                style={[
+                                                    styles.optionText,
+                                                    item.value === value && styles.optionTextActive,
+                                                    item.disabled && styles.optionTextDisabled,
+                                                ]}
+                                            >
+                                                {item.label}
+                                            </Text>
+                                            {item.disabled && item.disabledReason && (
+                                                <Text style={styles.optionDisabledReason}>
+                                                    {item.disabledReason}
+                                                </Text>
+                                            )}
+                                        </View>
+                                    </View>
+                                    {item.value === value && !item.disabled && (
                                         <Ionicons name="checkmark" size={18} color="#2E9E44" />
                                     )}
                                 </TouchableOpacity>

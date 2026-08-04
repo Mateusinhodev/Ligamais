@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Alert, View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,15 +26,13 @@ function CreateCompetitionStep1() {
     const [endDate, setEndDate] = useState(formData.endDate);
 
     function handleContinue() {
-        if (!name || !startDate || !endDate) {
-            console.log('Preencha os campos obrigatórios');
+        if (!name.trim() || !location.trim() || !startDate.trim() || !endDate.trim()) {
+            Alert.alert('Campos obrigatórios', 'Preencha todas as informações, exceto a descrição.');
             return;
         }
 
         updateFormData({ coverImage, name, description, location, startDate, endDate });
-
-        // TODO: navegar para CreateCompetitionStep2 assim que essa tela existir
-        console.log('Dados salvos, indo para o próximo passo (Configuração)');
+        navigation.navigate('CreateCompetitionStep2');
     }
 
     return (
@@ -85,7 +83,7 @@ function CreateCompetitionStep1() {
 
                 <View style={styles.inputGroup}>
                     <FormInput
-                        label="Local (opcional)"
+                        label="Local *"
                         placeholder="Ex: Campo do Bairro"
                         value={location}
                         onChangeText={setLocation}

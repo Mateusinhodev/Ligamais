@@ -12,6 +12,9 @@ import Register from '../screens/register/register.jsx';
 import CreateProfileStep1 from '../screens/createProfile/step1/step1.jsx';
 import CreateProfileStep2 from '../screens/createProfile/step2/step2.jsx';
 import CreateCompetitionStep1 from '../screens/createCompetition/step1/step1.jsx';
+import CreateCompetitionStep2 from '../screens/createCompetition/step2/step2.jsx';
+import CreateCompetitionStep3 from '../screens/createCompetition/step3/step3.jsx';
+import CreateCompetitionStep4 from '../screens/createCompetition/step4/step4.jsx';
 import Tabs from './tabs.jsx';
 import theme from '../constants/theme.js';
 
@@ -39,6 +42,9 @@ function AppNavigator() {
             <Stack.Screen name="CreateProfileStep1" component={CreateProfileStep1} />
             <Stack.Screen name="CreateProfileStep2" component={CreateProfileStep2} />
             <Stack.Screen name="CreateCompetitionStep1" component={CreateCompetitionStep1} />
+            <Stack.Screen name="CreateCompetitionStep2" component={CreateCompetitionStep2} />
+            <Stack.Screen name="CreateCompetitionStep3" component={CreateCompetitionStep3} />
+            <Stack.Screen name="CreateCompetitionStep4" component={CreateCompetitionStep4} />
             <Stack.Screen name="Home" component={Tabs} />
         </Stack.Navigator>
     );

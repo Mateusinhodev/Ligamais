@@ -3,13 +3,28 @@ import { createContext, useContext, useState } from "react";
 const CompetitionFormContext = createContext();
 
 const initialState = {
+  // Step 1 - Geral
   coverImage: null,
   name: '',
   description: '',
   location: '',
   startDate: '',
   endDate: '',
+  // Step 2 - Configuração
+  format: '',
+  teamsCount: '',
+  scheduleMode: 'rounds', // 'rounds' | 'period'
+  roundsCount: '',
+  matchDays: [],
+  matchTime: '',
+  // matchInterval: '',
+  // Step 3 - Equipes
+  teams: [
+    { id: '1', name: '', color: '' },
+    { id: '2', name: '', color: '' },
+  ],
 };
+
 
 export function CompetitionFormProvider({ children }) {
   const [formData, setFormData] = useState(initialState);

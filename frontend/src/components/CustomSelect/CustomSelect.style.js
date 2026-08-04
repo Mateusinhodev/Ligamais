@@ -72,4 +72,36 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.semiBold,
     color: theme.colors.primary,
   },
+  optionTextContainer: {
+    flex: 1,
+  },
+  optionItemDisabled: {
+    opacity: 0.5,
+  },
+  optionTextDisabled: {
+    color: '#999',
+  },
+  optionDisabledReason: {
+    fontSize: theme.fontSize.xs,
+    fontFamily: theme.fonts.body,
+    color: theme.colors.textSecondary,
+    marginTop: 2,
+  },
+    selectedContentRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+    flex: 1,
+  },
+  optionContentRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+    flex: 1,
+  },
+  colorDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+  },
 });
