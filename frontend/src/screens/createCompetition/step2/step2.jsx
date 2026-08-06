@@ -24,24 +24,54 @@ const QUANTIDADE_EQUIPES = Array.from({ length: 31 }, (_, i) => i + 2).map((n) =
     value: String(n),
 }));
 
-// Gera horários de 30 em 30 minutos: 06:00, 06:30, 07:00 ... 23:30
 const HORARIOS = Array.from({ length: 36 }, (_, i) => {
-    const totalMinutes = i * 30 + 6 * 60; // começa às 06:00
+    const totalMinutes = i * 30 + 6 * 60;
     const hours = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
     const minutes = String(totalMinutes % 60).padStart(2, '0');
     const time = `${hours}:${minutes}`;
     return { label: time, value: time };
 });
 
+// weekdayNumber corresponde ao valor de Date.getDay() (0 = domingo)
 const DIAS_SEMANA = [
-    { label: 'Dom', value: 'sun' },
-    { label: 'Seg', value: 'mon' },
-    { label: 'Ter', value: 'tue' },
-    { label: 'Qua', value: 'wed' },
-    { label: 'Qui', value: 'thu' },
-    { label: 'Sex', value: 'fri' },
-    { label: 'Sáb', value: 'sat' },
+    { label: 'Dom', value: 'sun', weekdayNumber: 0 },
+    { label: 'Seg', value: 'mon', weekdayNumber: 1 },
+    { label: 'Ter', value: 'tue', weekdayNumber: 2 },
+    { label: 'Qua', value: 'wed', weekdayNumber: 3 },
+    { label: 'Qui', value: 'thu', weekdayNumber: 4 },
+    { label: 'Sex', value: 'fri', weekdayNumber: 5 },
+    { label: 'Sáb', value: 'sat', weekdayNumber: 6 },
 ];
+
+function parseDate(dateString) {
+    if (!dateString) return null;
+    const [day, month, year] = dateString.split('/').map(Number);
+    if (!day || !month || !year) return null;
+    return new Date(year, month - 1, day);
+}
+
+// Conta quantas vezes os dias da semana selecionados ocorrem dentro
+// do período informado — cada ocorrência vira uma rodada.
+function countMatchDays(startDate, endDate, selectedWeekdayNumbers) {
+    const start = parseDate(startDate);
+    const end = parseDate(endDate);
+    if (!start || !end || end < start || !selectedWeekdayNumbers.length) return 0;
+
+    let count = 0;
+    const current = new Date(start);
+    while (current <= end) {
+        if (selectedWeekdayNumbers.includes(current.getDay())) count++;
+        current.setDate(current.getDate() + 1);
+    }
+    return count;
+}
+
+// Jogos por rodada, garantindo que todas as equipes joguem mesmo com
+// número ímpar (uma equipe joga duas partidas naquela rodada).
+function matchesPerRound(teamsCount) {
+    const teams = Number(teamsCount) || 0;
+    return teams < 2 ? 0 : Math.ceil(teams / 2);
+}
 
 function CreateCompetitionStep2() {
     const navigation = useNavigation();
@@ -53,7 +83,6 @@ function CreateCompetitionStep2() {
     const [roundsCount, setRoundsCount] = useState(formData.roundsCount);
     const [matchDays, setMatchDays] = useState(formData.matchDays);
     const [matchTime, setMatchTime] = useState(formData.matchTime);
-    const [matchInterval, setMatchInterval] = useState(formData.matchInterval);
 
     function toggleMatchDay(day) {
         setMatchDays((prev) => 
@@ -77,14 +106,33 @@ function CreateCompetitionStep2() {
             return;
         }
 
+        // Traduz os códigos escolhidos para texto legível, já pronto
+        // para o Step4 (Revisão) só ler, sem precisar de nenhuma lista.
+        const formatLabel = FORMATOS.find((f) => f.value === format)?.label ?? format;
+
+        const selectedDays = DIAS_SEMANA.filter((d) => matchDays.includes(d.value));
+        const matchDaysLabels = selectedDays.map((d) => d.label);
+
+        // Calcula o total de rodadas e a estimativa de jogos aqui mesmo,
+        // já que é neste ponto que todos os dados necessários (datas do
+        // Step1 + configuração deste Step2) estão disponíveis.
+        const calculatedRounds = scheduleMode === 'rounds'
+            ? Number(roundsCount) || 0
+            : countMatchDays(formData.startDate, formData.endDate, selectedDays.map((d) => d.weekdayNumber));
+
+        const estimatedMatches = calculatedRounds * matchesPerRound(teamsCount);
+
         updateFormData({
             format,
+            formatLabel,
             teamsCount,
             scheduleMode,
             roundsCount,
             matchDays,
+            matchDaysLabels,
             matchTime,
-            matchInterval,
+            calculatedRounds,
+            estimatedMatches,
         });
 
         navigation.navigate('CreateCompetitionStep3');
