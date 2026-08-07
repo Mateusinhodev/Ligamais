@@ -24,7 +24,7 @@ const CORES = [
 ];
 
 function createEmptyTeam() {
-    return { id: String(Date.now() + Math.random()), name: '', color: '' };
+    return { id: String(Date.now() + Math.random()), name: '', color: '', colorHex: '' };
 }
 
 function CreateCompetitionStep3() {
@@ -39,6 +39,14 @@ function CreateCompetitionStep3() {
 
     function updateTeam(id, fields) {
         setTeams((prev) => prev.map((team) => (team.id === id ? { ...team, ...fields } : team)));
+    }
+
+    // Já salva o value (código) e o colorHex (pronto para exibição)
+    // juntos — quem consumir a equipe depois (Details, listagem, etc)
+    // só lê team.colorHex, sem precisar traduzir nada.
+    function handleColorChange(teamId, colorValue) {
+        const selected = CORES.find((c) => c.value === colorValue);
+        updateTeam(teamId, { color: colorValue, colorHex: selected?.color ?? '' });
     }
 
     function addTeam() {
@@ -87,50 +95,46 @@ function CreateCompetitionStep3() {
                 <Text style={styles.cardTitle}>Cadastre as equipes</Text>
                 <Text style={styles.cardSubtitle}>Adicione todas as equipes que irão participar.</Text>
 
-                {teams.map((team, index) => {
-                    const selectedColor = CORES.find((c) => c.value === team.color)?.color;
+                {teams.map((team, index) => (
+                    <View key={team.id} style={styles.teamCard}>
+                        <View style={styles.teamHeader}>
+                            <Text style={styles.teamHeaderTitle}>Equipe {index + 1}</Text>
+                            {teams.length > 2 && (
+                                <TouchableOpacity onPress={() => removeTeam(team.id)}>
+                                    <Ionicons name="trash-outline" size={18} color="#D93A34" />
+                                </TouchableOpacity>
+                            )}
+                        </View>
 
-                    return (
-                        <View key={team.id} style={styles.teamCard}>
-                            <View style={styles.teamHeader}>
-                                <Text style={styles.teamHeaderTitle}>Equipe {index + 1}</Text>
-                                {teams.length > 2 && (
-                                    <TouchableOpacity onPress={() => removeTeam(team.id)}>
-                                        <Ionicons name="trash-outline" size={18} color="#D93A34" />
-                                    </TouchableOpacity>
-                                )}
+                        <View style={styles.teamBody}>
+                            <View style={styles.shieldContainer}>
+                                <Ionicons name="shield" size={40} color={team.colorHex || '#ccc'} />
                             </View>
 
-                            <View style={styles.teamBody}>
-                                <View style={styles.shieldContainer}>
-                                    <Ionicons name="shield" size={40} color={selectedColor || '#ccc'} />
+                            <View style={styles.teamFields}>
+                                <View style={styles.inputGroup}>
+                                    <FormInput
+                                        label="Nome da equipe *"
+                                        placeholder="Ex: Leões FC"
+                                        value={team.name}
+                                        onChangeText={(text) => updateTeam(team.id, { name: text })}
+                                    />
                                 </View>
 
-                                <View style={styles.teamFields}>
-                                    <View style={styles.inputGroup}>
-                                        <FormInput
-                                            label="Nome da equipe *"
-                                            placeholder="Ex: Leões FC"
-                                            value={team.name}
-                                            onChangeText={(text) => updateTeam(team.id, { name: text })}
-                                        />
-                                    </View>
-
-                                    <View>
-                                        <Text style={styles.label}>Cor principal *</Text>
-                                        <CustomSelect
-                                            label="Cor principal"
-                                            placeholder="Selecione a cor"
-                                            options={CORES}
-                                            value={team.color}
-                                            onChange={(color) => updateTeam(team.id, { color })}
-                                        />
-                                    </View>
+                                <View>
+                                    <Text style={styles.label}>Cor principal *</Text>
+                                    <CustomSelect
+                                        label="Cor principal"
+                                        placeholder="Selecione a cor"
+                                        options={CORES}
+                                        value={team.color}
+                                        onChange={(colorValue) => handleColorChange(team.id, colorValue)}
+                                    />
                                 </View>
                             </View>
                         </View>
-                    );
-                })}
+                    </View>
+                ))}
 
                 <TouchableOpacity style={styles.addTeamButton} onPress={addTeam}>
                     <Ionicons name="add" size={18} color="#2E9E44" />
